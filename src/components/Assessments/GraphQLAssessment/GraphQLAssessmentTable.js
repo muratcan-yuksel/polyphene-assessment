@@ -1,32 +1,44 @@
-import React from 'react';
+import React from "react";
+import { gql, useQuery } from "@apollo/client";
+
+const GET_CAKES = gql`
+  query GetCakes {
+    cakes {
+      description
+      id
+      image
+      title
+    }
+  }
+`;
 
 export default function GraphQLAssessmentTable() {
-    return (
-        <table id="reduxAssessmentTable">
-            <thead>
-            <tr>
-                <th>head1</th>
-                <th>head2</th>
-                <th>head3</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>cell1_1</td>
-                <td>cell2_1</td>
-                <td>cell3_1</td>
-            </tr>
-            <tr>
-                <td>cell1_2</td>
-                <td>cell2_2</td>
-                <td>cell3_2</td>
-            </tr>
-            <tr>
-                <td>cell1_3</td>
-                <td>cell2_3</td>
-                <td>cell3_3</td>
-            </tr>
-            </tbody>
-        </table>
-    );
+  const { loading, error, data } = useQuery(GET_CAKES);
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
+  console.log(data.cakes);
+  return (
+    <table id="reduxAssessmentTable">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Image</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.cakes.map((item) => (
+          <tr key={item.id}>
+            <td>{item.id}</td>
+            <td>{item.title}</td>
+            <td>{item.description}</td>
+            <td>
+              <img src={item.image} alt={item.title} className="w-80" />
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
 }
