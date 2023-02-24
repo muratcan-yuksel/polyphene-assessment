@@ -11,7 +11,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<Assessments />} exact />{" "}
         <Route path="/styling" element={<StylingAssessment />} exact />{" "}
-        {/* <Route path="/:id" element={<Character />} exact />{" "} */}
+        {/* <Route path="/:id" element={< />} exact />{" "} */}
       </Routes>
     </div>
   );
